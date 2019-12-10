@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+
+	<header id="gtco-header" class="gtco-cover gtco-cover-sm" role="banner" style="background-image:url({% static 'images/analytics2.jpg' %});">
+		<div class="overlay"></div>
+		<div class="gtco-container">
+			<div class="row">
+				<div class="col-md-8 col-md-offset-2 text-center">
+					<div class="display-t">
+						<div class="display-tc animate-box" data-animate-effect="fadeIn">
+							<h1>Project Members</h1>
+							
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</header>
+
+
+	<div id="gtco-team" class="gtco-section">
+		<div class="gtco-container">
+			<div class="row row-pb-md">
+				<div class="col-md-6 animate-box" data-animate-effect="fadeIn">
+					<div class="gtco-staff">
+						<img src="{% static 'images/person_1.jpg' %}" alt="Free HTML5 Templates by freehtml5.co">
+						<h3>Melek Elmas</h3>
+						<strong class="role">Data Scientist</strong>
+						<p>IAN 502 Term project group member.</p>
+						<ul class="gtco-social-icons">
+							<li><a href="https://www.linkedin.com/in/melekelmas/"><i class="icon-linkedin"></i></a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-md-6 animate-box" data-animate-effect="fadeIn">
+					<div class="gtco-staff">
+						<img src="{% static 'images/0.jpg' %}" alt="Free HTML5 Templates by freehtml5.co">
+						<h3>Fırat Varol</h3>
+						<strong class="role">Trading Operations and Contract Management Specialist at Enerjisa Üretim</strong>
+						<p>IAN 502 Term project group member.</p>
+						<ul class="gtco-social-icons">
+							<li><a href="https://www.linkedin.com/in/f%C4%B1rat-varol-b842b79b/"><i class="icon-linkedin"></i></a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-6 animate-box" data-animate-effect="fadeIn">
+					<div class="gtco-staff">
+						<img src="{% static 'images/1.jpg' %}" alt="Free HTML5 Templates by freehtml5.co">
+						<h3>Safa Can Demir</h3>
+						<strong class="role">Database Assistant Specialist</strong>
+						<p>IAN 502 Term project group member.</p>
+						<ul class="gtco-social-icons">
+							<li><a href="https://www.linkedin.com/in/safa-can-demir-2b592165/"><i class="icon-linkedin"></i></a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-md-6 animate-box" data-animate-effect="fadeIn">
+					<div class="gtco-staff">
+						<img src="{% static 'images/2.jpg' %}" alt="Free HTML5 Templates by freehtml5.co">
+						<h3>Onur Özdemir</h3>
+						<strong class="role">Senior Big Data Consultant</strong>
+						<p>IAN 502 Term project group member.</p>
+						<ul class="gtco-social-icons">
+							<li><a href="https://www.linkedin.com/in/onur-%C3%B6zdemir-7998b5107/"><i class="icon-linkedin"></i></a></li>
+							<li><a href="https://github.com/onurozdem/"><i class="icon-github"></i></a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+{% endblock content %}

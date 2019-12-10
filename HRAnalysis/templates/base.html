@@ -1,0 +1,149 @@
+<!DOCTYPE HTML>
+<!--
+	Greatness by FreeHTML5.co
+	Twitter: http://twitter.com/fh5co
+	URL: http://FreeHTML5.co
+-->
+<html>
+	{% load static %}
+	<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>IAN-502 Project</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Free HTML5 Website Template by FreeHTML5.co" />
+	<meta name="keywords" content="free website templates, free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive" />
+	<meta name="author" content="FreeHTML5.co" />
+
+	<link href='https://fonts.googleapis.com/css?family=Raleway:400,300,600,400italic,700' rel='stylesheet' type='text/css'>
+	
+	<!-- Animate.css -->
+	<link rel="stylesheet" href="{% static 'css/animate.css' %}">
+	<!-- Icomoon Icon Fonts-->
+	<link rel="stylesheet" href="{% static 'css/icomoon.css' %}">
+	<!-- Bootstrap  -->
+	<link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+
+	<!-- Magnific Popup -->
+	<link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
+
+	<!-- Owl Carousel  -->
+	<link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+	<link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}">
+
+	<!-- Theme style  -->
+	<link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+	<!-- Modernizr JS -->
+	<script src="{% static 'js/modernizr-2.6.2.min.js' %}"></script>
+	<!-- FOR IE9 below -->
+	<!--[if lt IE 9]>
+	<script src="{% static 'js/respond.min.js' %}"></script>
+	<![endif]-->
+
+	</head>
+	<body>
+		
+	<div class="gtco-loader"></div>
+	
+	<div id="page">
+	<nav class="gtco-nav" role="navigation">
+		<div class="gtco-container">
+			<div class="row">
+				<div class="col-xs-2">
+					<div id="gtco-logo"><a href="index.html"><img src="{% static 'images/sehir.png' %}" alt="Sehir" style="width:160px;height:120px;border:0;"></a></div>
+				</div>
+				<div class="col-xs-10 text-right menu-1">
+					<ul>
+						<li class="{% if request.path == '/' %} active {% endif %}"><a href="{% url 'index' %}">Home</a></li>
+						<li class="{% if request.path == '/about/' %} active {% endif %}"><a href="{% url 'about' %}">About</a></li>
+                        <li class="{% if request.path == '/project_members/' %} active {% endif %}"><a href="{% url 'project_members' %}">Project Members</a></li>
+                        <li class="{% if request.path == '/predict_data/' %} active {% endif %}"><a href="{% url 'predict_data' %}">Predict Data</a></li>
+						<li class="{% if request.path == '/model_dashboards/model_compare/' %} active {% elif request.path == '/model_dashboards/model_detail/' %} active {% endif %} has-dropdown">
+							<a href="#">Model Dashboards</a>
+							<ul class="dropdown">
+								<li><a href="{% url 'model_compare' %}">Model Compare</a></li>
+								<li><a href="{% url 'model_detail' %}">Model Detail</a></li>
+							</ul>
+						</li>
+						<li class="{% if request.path == '/contact/' %} active {% endif %}"><a href="{% url 'contact' %}">Contact</a></li>
+					</ul>
+				</div>
+			</div>
+			
+		</div>
+	</nav>
+
+	{% block content %}
+	{% endblock content %}
+
+	<div id="gtco-subscribe">
+		<div class="gtco-container">
+
+		</div>
+	</div>
+
+	<footer id="gtco-footer" role="contentinfo">
+		<div class="gtco-container">
+			<div class="row row-pb-md">
+				<div class="col-md-2 col-sm-4 col-xs-6 ">
+					<ul class="gtco-footer-links">
+						<li class="active"><a href="{% url 'index' %}">Home</a></li>
+						<li><a href="{% url 'about' %}">About</a></li>
+                        <li><a href="{% url 'project_members' %}">Project Members</a></li>
+                        <li><a href="{% url 'predict_data' %}">Predict Data</a></li>
+                        <li><a href="{% url 'model_detail' %}">Model Detail</a></li>
+						<li><a href="{% url 'contact' %}">Contact</a></li>
+					</ul>
+				</div>
+
+			</div>
+
+			<div class="row copyright">
+				<div class="col-md-12">
+					<p class="pull-left">
+						<small class="block">&copy; 2016 Free HTML5. All Rights Reserved.</small> 
+						<small class="block">Designed by <a href="http://FreeHTML5.co/" target="_blank">FreeHTML5.co</a> Demo Images: <a href="http://unsplash.co/" target="_blank">Unsplash</a></small>
+						<small class="block">Reduced by Onur Özdemir.</small>
+					</p>
+					<p class="pull-right">
+						<ul class="gtco-social-icons pull-right">
+							<li><a href="https://www.linkedin.com/in/melekelmas/"><i class="icon-linkedin"></i></a></li>
+							<li><a href="https://www.linkedin.com/in/f%C4%B1rat-varol-b842b79b/"><i class="icon-linkedin"></i></a></li>
+							<li><a href="https://www.linkedin.com/in/safa-can-demir-2b592165/"><i class="icon-linkedin"></i></a></li>
+							<li><a href="https://www.linkedin.com/in/onur-%C3%B6zdemir-7998b5107/"><i class="icon-linkedin"></i></a></li>
+							<li><a href="https://github.com/onurozdem/ian502HRanalysis"><i class="icon-github"></i></a></li>
+						</ul>
+					</p>
+				</div>
+			</div>
+
+		</div>
+	</footer>
+	</div>
+
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="icon-arrow-up"></i></a>
+	</div>
+	
+	<!-- jQuery -->
+	<script src="{% static 'js/jquery.min.js' %}"></script>
+	<!-- jQuery Easing -->
+	<script src="{% static 'js/jquery.easing.1.3.js' %}"></script>
+	<!-- Bootstrap -->
+	<script src="{% static 'js/bootstrap.min.js' %}"></script>
+	<!-- Waypoints -->
+	<script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+	<!-- Carousel -->
+	<script src="{% static 'js/owl.carousel.min.js' %}"></script>
+	<!-- countTo -->
+	<script src="{% static 'js/jquery.countTo.js' %}"></script>
+	<!-- Magnific Popup -->
+	<script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+	<script src="{% static 'js/magnific-popup-options.js' %}"></script>
+	<!-- Main -->
+	<script src="{% static 'js/main.js' %}"></script>
+
+	</body>
+</html>
+
