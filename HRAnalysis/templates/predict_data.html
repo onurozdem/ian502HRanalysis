@@ -18,4 +18,42 @@
 		</div>
 	</header>
 
+	<div id="gtco-features">
+		<div class="gtco-container">
+			<div class="row">
+
+				<div class="form" class="post-form">
+					<h3>Fill Fields</h3>
+					<form method="post"> {% csrf_token %}
+						<div class="row form-group">
+							<select name="algorithm" class="dropdown">
+								<option value="linear_regr">Linear Regression</option>
+								<option value="lojistic_regr">Lojistic Regression</option>
+								<option value="knn">KNN</option>
+							</select>
+						</div>
+
+						<div class="row form-group">
+							<label for="fname">First Name</label>
+							<input type="text" id="fname" name="fname" placeholder="Your firstname" value="{{ data.fname }}" required>
+
+						</div>
+
+						{% if data.is_analysed is not True %}
+							<div class="form-group">
+								<input type="submit" value="Send Message" class="btn btn-primary">
+							</div>
+						{% endif %}
+					</form>
+				</div>
+			</div>
+
+			{% if data.is_analysed is True %}
+				<div class="row">
+					<p>Deneme</p>
+				</div>
+			{% endif %}
+		</div>
+	</div>
+
 {% endblock content %}
