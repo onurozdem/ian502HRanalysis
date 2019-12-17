@@ -1,6 +1,8 @@
 from HRAnalysis.models import *
 from django.shortcuts import render, reverse, HttpResponseRedirect
 from HRAnalysis.forms import PredictForm
+from HRAnalysis.analysemodels import DataPreparation
+from django.forms.models import model_to_dict
 
 
 def index(request):
@@ -30,7 +32,53 @@ def model_compare(request):
 
 
 def model_detail(request):
-    return render(request, 'model_detail.html', {})
+    analyse_data = []
+    for i in UnprocessedData.objects.values():
+        analyse_data.append(i)
+
+    a,b,c,d = DataPreparation.DataPreparation(analyse_data).data_preparation()
+
+    xdata = ["Apple", "Apricot", "Avocado", "Banana", "Boysenberries", "Blueberries", "Dates", "Grapefruit", "Kiwi",
+             "Lemon"]
+    ydata = [52, 48, 160, 94, 75, 71, 490, 82, 46, 17]
+    chartdata = {'x': xdata, 'y': ydata}
+    charttype = "pieChart"
+    chartcontainer = 'piechart_container'
+    data = {
+        'charttype': charttype,
+        'chartdata': chartdata,
+        'chartcontainer': chartcontainer,
+        'extra': {
+            'x_is_date': False,
+            'x_axis_format': '',
+            'tag_script_js': True,
+            'jquery_on_ready': False,
+        },
+        'rowLabel':["1","r","3","5"]
+    }
+    return render(request, 'model_detail.html', data)
+
+
+def data_detail(request):
+    xdata = ["Apple", "Apricot", "Avocado", "Banana", "Boysenberries", "Blueberries", "Dates", "Grapefruit", "Kiwi",
+             "Lemon"]
+    ydata = [52, 48, 160, 94, 75, 71, 490, 82, 46, 17]
+    chartdata = {'x': xdata, 'y': ydata}
+    charttype = "pieChart"
+    chartcontainer = 'piechart_container'
+    data = {
+        'charttype': charttype,
+        'chartdata': chartdata,
+        'chartcontainer': chartcontainer,
+        'extra': {
+            'x_is_date': False,
+            'x_axis_format': '',
+            'tag_script_js': True,
+            'jquery_on_ready': False,
+        },
+        'rowLabel':["1","r","3","5"]
+    }
+    return render(request, 'model_detail.html', data)
 
 
 def predict_data(request):
