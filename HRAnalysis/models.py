@@ -41,20 +41,10 @@ class UnprocessedData(models.Model):
 
 class ModelDetail(models.Model):
     AlgorithmName = models.CharField(max_length=200)
-    Accuracy = models.IntegerField()
-    CorelationMatris = models.CharField(max_length=200)
-    Date = models.DateTimeField(editable=False)
+    ModelScoreDict = models.CharField(max_length=500)
+    Date = models.DateTimeField(editable=False, auto_now_add=True)
 
 
 class PredictFormData(models.Model):
     algortihm=models.CharField(max_length=200)
     fname=models.CharField(max_length=200)
-
-
-"""class Item(models.Model):
-	todolist = models.ForeignKey(ToDoList, on_delete=models.CASCADE)
-	text = models.CharField(max_length=300)
-	complete = models.BooleanField()
-
-	def __str__(self):
-		return self.text"""

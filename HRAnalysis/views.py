@@ -1,7 +1,9 @@
+import datetime
+
 from HRAnalysis.models import *
 from django.shortcuts import render, reverse, HttpResponseRedirect
 from HRAnalysis.forms import PredictForm
-from HRAnalysis.analysemodels import DataPreparation
+from HRAnalysis.analysemodels import TrainModel
 from django.forms.models import model_to_dict
 
 
@@ -32,12 +34,9 @@ def model_compare(request):
 
 
 def model_detail(request):
-    analyse_data = []
-    for i in UnprocessedData.objects.values():
-        analyse_data.append(i)
-
-    a,b,c,d = DataPreparation.DataPreparation(analyse_data).data_preparation()
-
+    last_train_date = ModelDetail.objects.order_by('Date').first()
+    a = datetime.datetime.now() - last_train_date.Date
+    check_require_train()
     xdata = ["Apple", "Apricot", "Avocado", "Banana", "Boysenberries", "Blueberries", "Dates", "Grapefruit", "Kiwi",
              "Lemon"]
     ydata = [52, 48, 160, 94, 75, 71, 490, 82, 46, 17]
@@ -105,3 +104,16 @@ def predict_data(request):
 
 def contact(request):
     return render(request, 'contact.html', {})
+
+
+def check_require_train():
+    analyse_data = []
+    for i in UnprocessedData.objects.values():
+        analyse_data.append(i)
+
+    try:
+        TrainModel.TrainModels(analyse_data)
+    except:
+        raise
+
+
