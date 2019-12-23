@@ -24,7 +24,7 @@
 	<div id="gtco-features">
 		<div class="gtco-container">
 			<div class="row">
-				<div class="col-md-4 col-sm-4">
+				<div class="col-md-3 col-sm-3">
 					<div class="feature-center animate-box" data-animate-effect="fadeIn">
 						<span class="icon">
 							<i class="icon-command"></i>
@@ -34,17 +34,18 @@
 						<p><a href="{% url 'predict_data' %}" class="btn btn-primary btn-outline">Predict</a></p>
 					</div>
 				</div>
-				<div class="col-md-4 col-sm-4">
+				<div class="col-md-3 col-sm-3">
 					<div class="feature-center animate-box" data-animate-effect="fadeIn">
 						<span class="icon">
 							<i class="icon-check"></i>
 						</span>
 						<h3>Compare Models</h3>
 						<p> Compare given models. </p>
+						<br>
 						<p><a href="{% url 'model_compare' %}" class="btn btn-primary btn-outline">Compare</a></p>
 					</div>
 				</div>
-				<div class="col-md-4 col-sm-4">
+				<div class="col-md-3 col-sm-3">
 					<div class="feature-center animate-box" data-animate-effect="fadeIn">
 						<span class="icon">
 							<i class="icon-eye"></i>
@@ -52,6 +53,16 @@
 						<h3> View Model Detail </h3>
 						<p> View model statistics and dashboards. </p>
 						<p><a href="{% url 'model_detail' %}" class="btn btn-primary btn-outline">View</a></p>
+					</div>
+				</div>
+				<div class="col-md-3 col-sm-3">
+					<div class="feature-center animate-box" data-animate-effect="fadeIn">
+						<span class="icon">
+							<i class="icon-eye"></i>
+						</span>
+						<h3> View Data Detail </h3>
+						<p> View data descriptive dashboards. </p>
+						<p><a href="{% url 'data_detail' %}" class="btn btn-primary btn-outline">View</a></p>
 					</div>
 				</div>
 			</div>
@@ -128,7 +139,7 @@
 									<i class="icon-check"></i>
 								</span>
 
-								<span class="counter js-counter" data-from="0" data-to="{% if data.linear_regression is not none %} {{data.logistic_regression}} {% else %} 0 {% endif %}" data-speed="5000" data-refresh-interval="50">1</span>
+								<span class="counter js-counter" data-from="0" data-to="{% if data.logistic_regression is not none %} {{data.logistic_regression}} {% else %} 0 {% endif %}" data-speed="5000" data-refresh-interval="50">1</span>
 								<span class="counter-label">Logistic Regression <br> Accuracy</span>
 							</div>
 						</div>
@@ -138,7 +149,7 @@
 									<i class="icon-check"></i>
 								</span>
 
-								<span class="counter js-counter" data-from="0" data-to="{% if data.linear_regression is not none %} {{data.knn}} {% else %} 0 {% endif %}" data-speed="5000" data-refresh-interval="50">1</span>
+								<span class="counter js-counter" data-from="0" data-to="{% if data.knn is not none %} {{data.knn|floatformat:2}} {% else %} 0 {% endif %}" data-speed="5000" data-refresh-interval="50">1</span>
 								<span class="counter-label">KNN Accuracy</span>
 							</div>
 						</div>

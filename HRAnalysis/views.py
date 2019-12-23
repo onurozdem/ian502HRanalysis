@@ -1,23 +1,27 @@
 import datetime
+import csv
+import pandas as pd
+import json
 
 from HRAnalysis.models import *
-from django.shortcuts import render, reverse, HttpResponseRedirect
 from HRAnalysis.forms import PredictForm
-from HRAnalysis.analysemodels import TrainModel
 from django.forms.models import model_to_dict
+from sklearn.preprocessing import LabelEncoder
+from HRAnalysis.analysemodels import TrainModel
+from django.shortcuts import render, reverse, HttpResponseRedirect
 
 
 def index(request):
     data = None
     if request.method == 'GET':
         row_number = UnprocessedData.objects.count()
-        linear_regr = ModelDetail.objects.filter(AlgorithmName='LinearRegression').order_by('Date').first()
-        logistic_regr = ModelDetail.objects.filter(AlgorithmName='LogisticRegression').order_by('Date').first()
-        knn = ModelDetail.objects.filter(AlgorithmName='KNN').order_by('Date').first()
+        linear_regr = ModelDetail.objects.filter(AlgorithmName='Logistic Regression').order_by('Date').first()
+        logistic_regr = ModelDetail.objects.filter(AlgorithmName='Decision Tree').order_by('Date').first()
+        knn = ModelDetail.objects.filter(AlgorithmName='Random Forest').order_by('Date').first()
         data = {'row_number': row_number,
-                'linear_regression': linear_regr,
-                'logistic_regression': logistic_regr,
-                'knn': knn}
+                'linear_regression': json.loads(linear_regr.ModelScoreDict.replace("'",'"'))["accuracy"],
+                'logistic_regression': json.loads(logistic_regr.ModelScoreDict.replace("'",'"'))["accuracy"],
+                'knn': json.loads(knn.ModelScoreDict.replace("'",'"'))["accuracy"]}
     return render(request, 'index.html', {'data': data})
 
 
@@ -34,8 +38,6 @@ def model_compare(request):
 
 
 def model_detail(request):
-    last_train_date = ModelDetail.objects.order_by('Date').first()
-    a = datetime.datetime.now() - last_train_date.Date
     check_require_train()
     xdata = ["Apple", "Apricot", "Avocado", "Banana", "Boysenberries", "Blueberries", "Dates", "Grapefruit", "Kiwi",
              "Lemon"]
@@ -53,34 +55,38 @@ def model_detail(request):
             'tag_script_js': True,
             'jquery_on_ready': False,
         },
-        'rowLabel':["1","r","3","5"]
+        'rowLabel':["1","r","3","5"],
+        'colLabel': ["a","b","c","d"]
     }
     return render(request, 'model_detail.html', data)
 
 
 def data_detail(request):
-    xdata = ["Apple", "Apricot", "Avocado", "Banana", "Boysenberries", "Blueberries", "Dates", "Grapefruit", "Kiwi",
-             "Lemon"]
-    ydata = [52, 48, 160, 94, 75, 71, 490, 82, 46, 17]
-    chartdata = {'x': xdata, 'y': ydata}
-    charttype = "pieChart"
-    chartcontainer = 'piechart_container'
-    data = {
-        'charttype': charttype,
-        'chartdata': chartdata,
-        'chartcontainer': chartcontainer,
-        'extra': {
-            'x_is_date': False,
-            'x_axis_format': '',
-            'tag_script_js': True,
-            'jquery_on_ready': False,
-        },
-        'rowLabel':["1","r","3","5"]
-    }
-    return render(request, 'model_detail.html', data)
+    check_require_train()
+    table_data = []
+    columns = ["Age", "Attrition", "BusinessTravel", "DailyRate", "Department", "DistanceFromHome", "Education",
+               "EducationField", "EmployeeCount", "EmployeeNumber", "EnvironmentSatisfaction", "Gender", "HourlyRate",
+               "JobInvolvement", "JobLevel", "JobRole", "JobSatisfaction", "MaritalStatus", "MonthlyIncome",
+               "MonthlyRate",
+               "NumCompaniesWorked", "Over18", "OverTime", "PercentSalaryHike", "PerformanceRating",
+               "RelationshipSatisfaction", "StandardHours", "StockOptionLevel", "TotalWorkingYears",
+               "TrainingTimesLastYear",
+               "WorkLifeBalance", "YearsAtCompany", "YearsInCurrentRole", "YearsSinceLastPromotion",
+               "YearsWithCurrManager"]
+
+    for row in UnprocessedData.objects.values():
+        tmp_list = []
+        for column in columns:
+            tmp_list.append(row[column])
+
+        table_data.append(tmp_list)
+
+    data = {"table_data": table_data}
+    return render(request, 'data_detail.html', data)
 
 
 def predict_data(request):
+    check_require_train()
     data = {}
     """if request.GET:
         data = request.GET
@@ -107,13 +113,22 @@ def contact(request):
 
 
 def check_require_train():
-    analyse_data = []
-    for i in UnprocessedData.objects.values():
-        analyse_data.append(i)
+    if ModelDetail.objects.count() > 0:
+        last_train_date = ModelDetail.objects.order_by('Date').first()
+        last_train_date_check = (datetime.datetime.now() - last_train_date.Date.replace(tzinfo=None)).days
+    else:
+        last_train_date_check = 7
 
-    try:
-        TrainModel.TrainModels(analyse_data)
-    except:
-        raise
+    if last_train_date_check >= 7:
+        analyse_data = []
+        for i in UnprocessedData.objects.values():
+            analyse_data.append(i)
+
+        try:
+            TrainModel.TrainModels(analyse_data)
+        except:
+            raise
+    else:
+        print("No need train model!")
 
 

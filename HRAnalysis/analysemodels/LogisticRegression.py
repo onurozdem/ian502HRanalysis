@@ -19,6 +19,7 @@ class LR:
     def train(self):
         try:
             model_score_dict = dict()
+            model_start_time = datetime.datetime.now()
 
             """parameters = {"C":[20.0, 40.0, 60.0, 80.0, 100.0, 120.0], "penalty":["l1","l2"]}# l1 lasso l2 ridge
             logr = LogisticRegression()
@@ -32,12 +33,15 @@ class LR:
             print("accuracy :",gridcv_logreg.best_score_)"""
 
             logreg2 = LogisticRegression(C = 20.0,
-                                         penalty = "l1")
+                                         penalty = "l2")
             logreg2.fit(self.x_train, self.y_train)
             y_pred = logreg2.predict(self.x_test)
 
             acc_logreg2 = accuracy_score(y_pred, self.y_test)
             print("Logistic Regression Accuracy Score with Grid Search CV is : ", acc_logreg2)
+
+            model_end_time = datetime.datetime.now()
+            model_running_performance = model_end_time - model_start_time
 
             #Confusion Matrix
             conf_mat = confusion_matrix(self.y_test, y_pred)
@@ -48,6 +52,7 @@ class LR:
             auc_logreg = metrics.roc_auc_score(self.y_test, predict_proba_logreg)
 
             #Assign all score values to dict
+            model_score_dict["model_running_performance"] = (model_running_performance.seconds/60)
             model_score_dict["accuracy"] = acc_logreg2
             model_score_dict["conf_mat"] = conf_mat.tolist()
             model_score_dict["fpr"] = fpr.tolist()

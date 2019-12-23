@@ -19,6 +19,7 @@ class RandomForest:
     def train(self):
         try:
             model_score_dict = dict()
+            model_start_time = datetime.datetime.now()
 
             """rf = RandomForestClassifier()
             
@@ -47,6 +48,9 @@ class RandomForest:
             acc_rf2 = accuracy_score(y_pred, self.y_test)
             print("Random Forest Accuracy Score with Grid Search CV is : ", acc_rf2)
 
+            model_end_time = datetime.datetime.now()
+            model_running_performance = model_end_time - model_start_time
+
             #Confusion Matrix
             conf_mat = confusion_matrix(self.y_test, y_pred)
 
@@ -56,6 +60,7 @@ class RandomForest:
             auc_rf = metrics.roc_auc_score(self.y_test, pred_proba_rf)
 
             #Assign all score values to dict
+            model_score_dict["model_running_performance"] = (model_running_performance.seconds/60)
             model_score_dict["accuracy"] = acc_rf2
             model_score_dict["conf_mat"] = conf_mat.tolist()
             model_score_dict["fpr"] = fpr.tolist()

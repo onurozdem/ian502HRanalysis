@@ -19,6 +19,7 @@ class SVM:
     def train(self):
         try:
             model_score_dict = dict()
+            model_start_time = datetime.datetime.now()
 
             svm = SVC()
             """
@@ -47,6 +48,9 @@ class SVM:
             acc_svm2 = accuracy_score(y_pred, self.y_test)
             print("SVM Score with Grid Search CV is :", acc_svm2)
 
+            model_end_time = datetime.datetime.now()
+            model_running_performance = model_end_time - model_start_time
+
             #Confusion Matrix
             conf_mat = confusion_matrix(self.y_test, y_pred)
 
@@ -56,14 +60,15 @@ class SVM:
             auc_svm = metrics.roc_auc_score(self.y_test, pred_proba_svm)
 
             #Assign all score values to dict
+            model_score_dict["model_running_performance"] = (model_running_performance.seconds/60)
             model_score_dict["accuracy"] = acc_svm2
             model_score_dict["conf_mat"] = conf_mat.tolist()
             model_score_dict["fpr"] = fpr.tolist()
             model_score_dict["tpr"] = tpr.tolist()
             model_score_dict["auc"] = auc_svm
 
-            ModelDetail(**{'AlgorithmName': 'Random Forest', 'ModelScoreDict': str(model_score_dict)})
-            ModelDetail.save()
+            md = ModelDetail(**{'AlgorithmName': 'SVM', 'ModelScoreDict': str(model_score_dict)})
+            md.save()
 
             # Export model
             with open('./HRAnalysis/analysemodels/models/SVM.pkl', 'wb') as model_file:

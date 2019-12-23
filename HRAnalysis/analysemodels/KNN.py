@@ -19,6 +19,7 @@ class KNN:
     def train(self):
         try:
             model_score_dict = dict()
+            model_start_time = datetime.datetime.now()
 
             """knn = KNeighborsClassifier()
 
@@ -41,6 +42,9 @@ class KNN:
             acc_knn2 = accuracy_score(y_pred, self.y_test)
             print("KNN Accuracy Score is :", acc_knn2)
 
+            model_end_time = datetime.datetime.now()
+            model_running_performance = model_end_time - model_start_time
+
             #Confusion Matrix
             conf_mat = confusion_matrix(self.y_test, y_pred)
 
@@ -50,6 +54,7 @@ class KNN:
             auc_knn = metrics.roc_auc_score(self.y_test, pred_proba_knn)
 
             #Assign all score values to dict
+            model_score_dict["model_running_performance"] = (model_running_performance.seconds/60)
             model_score_dict["accuracy"] = acc_knn2
             model_score_dict["conf_mat"] = conf_mat.tolist()
             model_score_dict["fpr"] = fpr.tolist()
