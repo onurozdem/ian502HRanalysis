@@ -47,15 +47,6 @@ table{
 	    </div>
 	</header>
 
-	<!-- <div id="gtco-features">
-	    <div class="gtco-container">
-	        <div class="row">
-	            {% load_chart charttype chartdata "piechart_container" extra %}
-	            {% include_container chartcontainer 400 600 %}
-	        </div>
-	    </div>
-	</div>-->>
-
 	<div id="gtco-features">
 		<div class="gtco-container">
 			<div class="row">
@@ -64,11 +55,11 @@ table{
 						<div class="row form-group">
 							<label for="algorithm">Select Model:</label>
 							<select id="algorithm" name="algorithm" class="dropdown">
-								<option value="adaboost">Adaboost</option>
+								<option value="adaboost"> Adaboost</option>
 								<option value="dt">Decision Tree</option>
 								<option value="knn">KNN</option>
-								<option value="lda">Linear Discriminant Anaylsis</option>
-								<option value="lgr">Lojistic Regression</option>
+								<option value="lda">Linear Discriminant Analysis</option>
+								<option value="lgr">Logistic Regression</option>
 								<option value="nb">Naive Bayes</option>
 								<option value="ann">ANN</option>
 								<option value="rf">Random Forest</option>
@@ -76,11 +67,9 @@ table{
 							</select>
 						</div>
 
-						{% if data.is_analysed is not True %}
-							<div class="form-group">
-								<input type="submit" value="Get Model Detail" class="btn btn-primary">
-							</div>
-						{% endif %}
+                        <div class="form-group">
+                            <input type="submit" value="Get Model Detail" class="btn btn-primary">
+                        </div>
 					</form>
 				</div>
 			</div>
@@ -96,15 +85,40 @@ table{
 					</div>
 				</div>
 				<div class="row">
-					<label for="dataView"><h3>Confusion Matrix</h3></label>
-					<div id="dataView"></div>
-    				<div style="display:inline-block; float:left" id="confcontainer"></div>
-    				<div style="display:inline-block; float:left" id="legend"></div>
+                    <div class="col-md-6 col-sm-6">
+					    <label for="dataView"><h3>Confusion Matrix</h3></label>
+					    <div id="dataView"></div>
+    				    <div style="display:inline-block; float:left" id="confcontainer"></div>
+    				    <div style="display:inline-block; float:left" id="legend"></div>
+                    </div>
+                    <div class="col-sm-offset-7">
+                        <label for="roc"><h3>ROC Curve</h3></label>
+                        <img id="roc" name="roc" src="{% static 'images/' %}{{ data.roc_file|safe }}" height="500" width="500">
+                    </div>
+				</div>
+                <div class="row" style="padding-top:40px;">
+                    <div>
+					    <label for="line_acc"><h3>Accuracy History</h3></label>
+                        <img id="line_acc" name="line_acc" src="{% static 'images/' %}{{ data.line_file|safe }}" height="500" width="1000">
+                    </div>
+				</div>
+                <div class="row" style="padding-top:40px;">
+                    <div>
+					    <label for="line_perf"><h3>Model Performance</h3></label>
+                        <img id="line_perf" name="line_perf" src="{% static 'images/' %}{{ data.line_perf_file|safe }}" height="500" width="1000">
+                    </div>
 				</div>
 			</div>
 		</div>
 	{% endif %}
 
+    <script>
+        $( document ).ready(function() {
+            $("#algorithm").val("{{data.short_algorithm|safe}}");
+        });
+    </script>
+
+    <!-- Confusion Matrix-->
 	<script>
 
 		var confusionMatrix = {{data.conf_mat|safe}};
@@ -140,7 +154,7 @@ table{
 		});
 
 		// rendering the table
-         var table = tabulate(computedData, ["F1", "PRECISION","RECALL","ACCURACY"]);
+         var table = tabulate("#dataView", computedData, ["F1", "PRECISION","RECALL","ACCURACY"]);
 
 	</script>
 

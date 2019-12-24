@@ -2,6 +2,34 @@
 
 {% block content %}
 {% load static %}
+{% load nvd3_tags %}
+{% include_chart_jscss %}
+
+<style>
+        .axis text {
+    font: 10px sans-serif;
+}
+
+.axis line, .axis path {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+}
+
+td, th, tr {
+    padding: 4px;
+    border: 1px solid black;
+}
+
+table{
+    border-collapse: collapse;
+}
+
+#dataView{
+  margin-top:50px;
+}
+    </style>
+
 
 	<header id="gtco-header" class="gtco-cover gtco-cover-sm" role="banner" style="background-image:url({% static 'images/analytics2.jpg' %});">
 		<div class="overlay"></div>
@@ -19,6 +47,203 @@
 		</div>
 	</header>
 
+	<div id="gtco-features">
+		<div class="gtco-container">
+			<div class="row">
+				<div class="form">
+					<form method="post"> {% csrf_token %}
+						<div class="row form-group col-md-6 col-sm-6">
+							<label for="algorithm1">Select Model:</label>
+							<select id="algorithm1" name="algorithm1" class="dropdown">
+								<option value="adaboost"> Adaboost</option>
+								<option value="dt">Decision Tree</option>
+								<option value="knn">KNN</option>
+								<option value="lda">Linear Discriminant Analysis</option>
+								<option value="lgr">Logistic Regression</option>
+								<option value="nb">Naive Bayes</option>
+								<option value="ann">ANN</option>
+								<option value="rf">Random Forest</option>
+								<option value="svm">SVM</option>
+							</select>
+						</div>
 
+                        <div class="row form-group col-sm-offset-7">
+							<label for="algorithm2">Select Model:</label>
+							<select id="algorithm2" name="algorithm2" class="dropdown">
+								<option value="adaboost"> Adaboost</option>
+								<option value="dt">Decision Tree</option>
+								<option value="knn">KNN</option>
+								<option value="lda">Linear Discriminant Analysis</option>
+								<option value="lgr">Logistic Regression</option>
+								<option value="nb">Naive Bayes</option>
+								<option value="ann">ANN</option>
+								<option value="rf">Random Forest</option>
+								<option value="svm">SVM</option>
+							</select>
+						</div>
+
+                        <div class="form-group col-sm-offset-4">
+                            <input type="submit" value="Compare Models" class="btn btn-primary">
+                        </div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+	    {% if data1.is_analysed is True %}
+            <div class="gtco-container">
+                <div class="row">
+                    <div class="gtco-header col-md-6 col-sm-6">
+                        <h1 style="color:OrangeRed;"><u> {{ data1.algorithm }} Details </u></h1>
+                    </div>
+                    <div class="gtco-header col-sm-offset-7">
+                        <h1 style="color:OrangeRed;"><u> {{ data2.algorithm }} Details </u></h1>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-sm-6">
+                        <label for="dataView1"><h3>Confusion Matrix</h3></label>
+                        <div id="dataView1"></div>
+                        <div style="display:inline-block; float:left" id="confcontainer1"></div>
+                        <div style="display:inline-block; float:left" id="legend1"></div>
+                    </div>
+                    <div class="col-sm-offset-7">
+                        <label for="dataView2"><h3>Confusion Matrix</h3></label>
+                        <div id="dataView2"></div>
+                        <div style="display:inline-block; float:left" id="confcontainer2"></div>
+                        <div style="display:inline-block; float:left" id="legend2"></div>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6">
+                        <label for="roc1"><h3>ROC Curve</h3></label>
+                        <img id="roc1" name="roc1" src="{% static 'images/' %}{{ data1.roc_file|safe }}" height="500"
+                             width="500">
+                    </div>
+                    <div class="col-sm-offset-7">
+                        <label for="roc2"><h3>ROC Curve</h3></label>
+                        <img id="roc2" name="roc2" src="{% static 'images/' %}{{ data2.roc_file|safe }}" height="500"
+                             width="500">
+                    </div>
+                </div>
+                <div class="row" style="padding-top:40px;">
+                    <div class="col-md-6 col-sm-6">
+                        <label for="line_acc1"><h3>Accuracy History</h3></label>
+                        <img id="line_acc1" name="line_acc1" src="{% static 'images/' %}{{ data1.line_file|safe }}"
+                             height="500" width="500">
+                    </div>
+                    <div class="col-sm-offset-7">
+                        <label for="line_acc2"><h3>Accuracy History</h3></label>
+                        <img id="line_acc2" name="line_acc2" src="{% static 'images/' %}{{ data2.line_file|safe }}"
+                             height="500" width="500">
+                    </div>
+                </div>
+                <div class="row" style="padding-top:40px;">
+                    <div class="col-md-6 col-sm-6">
+                        <label for="line_perf1"><h3>Model Performance</h3></label>
+                        <img id="line_perf1" name="line_perf1"
+                             src="{% static 'images/' %}{{ data1.line_perf_file|safe }}" height="500" width="500">
+                    </div>
+                    <div class="col-sm-offset-7">
+                        <label for="line_perf2"><h3>Model Performance</h3></label>
+                        <img id="line_perf2" name="line_perf2"
+                             src="{% static 'images/' %}{{ data2.line_perf_file|safe }}" height="500" width="500">
+                    </div>
+                </div>
+            </div>
+            </div>
+	{% endif %}
+
+
+    <script>
+        $( document ).ready(function() {
+            $("#algorithm1").val("{{data1.short_algorithm|safe}}");
+        });
+    </script>
+
+    <script>
+        $( document ).ready(function() {
+            $("#algorithm2").val("{{data2.short_algorithm|safe}}");
+        });
+    </script>
+
+    <!-- Confusion Matrix1-->
+	<script>
+
+		var confusionMatrix1 = {{data1.conf_mat|safe}};
+
+        var tp1 = confusionMatrix1[0][0];
+        var fn1 = confusionMatrix1[0][1];
+        var fp1 = confusionMatrix1[1][0];
+        var tn1 = confusionMatrix1[1][1];
+
+        var p1 = tp1 + fn1;
+        var n1 = fp1 + tn1;
+
+        var accuracy1 = (tp1+tn1)/(p1+n1);
+        var f11 = 2*tp1/(2*tp1+fp1+fn1);
+        var precision1 = tp1/(tp1+fp1);
+        var recall1 = tp1/(tp1+fn1);
+
+        accuracy1 = Math.round(accuracy1 * 100) / 100
+        f11 = Math.round(f11 * 100) / 100
+        precision1 = Math.round(precision1 * 100) / 100
+        recall1 = Math.round(recall1 * 100) / 100
+
+        var computedData1 = [];
+        computedData1.push({"F1":f11, "PRECISION":precision1,"RECALL":recall1,"ACCURACY":accuracy1});
+
+        var labels1 = ['Is_Attrition', 'Not_Attrition'];
+		Matrix({
+			container : '#confcontainer1',
+			data      : confusionMatrix1,
+			labels    : labels1,
+            start_color : '#ffffff',
+            end_color : '#e67e22'
+		});
+
+		// rendering the table
+         var table1 = tabulate("#dataView1", computedData1, ["F1", "PRECISION","RECALL","ACCURACY"]);
+
+	</script>
+
+    <!-- Confusion Matrix2-->
+	<script>
+
+		var confusionMatrix2 = {{data2.conf_mat|safe}};
+
+        var tp2 = confusionMatrix2[0][0];
+        var fn2 = confusionMatrix2[0][1];
+        var fp2 = confusionMatrix2[1][0];
+        var tn2 = confusionMatrix2[1][1];
+
+        var p2 = tp2 + fn2;
+        var n2 = fp2 + tn2;
+
+        var accuracy2 = (tp2+tn2)/(p2+n2);
+        var f12 = 2*tp2/(2*tp2+fp2+fn2);
+        var precision2 = tp2/(tp2+fp2);
+        var recall2 = tp2/(tp2+fn2);
+
+        accuracy2 = Math.round(accuracy2 * 100) / 100
+        f12 = Math.round(f12 * 100) / 100
+        precision2 = Math.round(precision2 * 100) / 100
+        recall2 = Math.round(recall2 * 100) / 100
+
+        var computedData2 = [];
+        computedData2.push({"F1":f12, "PRECISION":precision2,"RECALL":recall2,"ACCURACY":accuracy2});
+
+        var labels2 = ['Is_Attrition', 'Not_Attrition'];
+		Matrix({
+			container : '#confcontainer2',
+			data      : confusionMatrix2,
+			labels    : labels2,
+            start_color : '#ffffff',
+            end_color : '#e67e22'
+		});
+
+		// rendering the table
+         var table2 = tabulate("#dataView2", computedData2, ["F1", "PRECISION","RECALL","ACCURACY"]);
+
+	</script>
 
 {% endblock content %}

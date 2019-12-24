@@ -80,7 +80,7 @@
 			<div class="row">
 				<div class="col-md-3 animate-box" data-animate-effect="fadeIn">
 					<div class="gtco-staff">
-						<img src="{% static 'images/person_1.jpg' %}" alt="Free HTML5 Templates by freehtml5.co">
+						<img src="{% static 'images/3.jpg' %}" alt="Free HTML5 Templates by freehtml5.co">
 						<h3>Melek Elmas</h3>
 					</div>
 				</div>
@@ -129,8 +129,8 @@
 									<i class="icon-check"></i>
 								</span>
 
-								<span class="counter js-counter" data-from="0" data-to="{% if data.linear_regression is not none %} {{data.linear_regression}} {% else %} 0 {% endif %}" data-speed="5000" data-refresh-interval="50">1</span>
-								<span class="counter-label">Linear Regression <br> Accuracy</span>
+								<span class="counter">{% if data.rf is not none %} {{data.rf|floatformat:3}} {% else %} 0 {% endif %}</span>
+								<span class="counter-label">Random Forest <br> Accuracy</span>
 							</div>
 						</div>
 						<div class="col-md-3 col-sm-6 animate-box">
@@ -139,7 +139,7 @@
 									<i class="icon-check"></i>
 								</span>
 
-								<span class="counter js-counter" data-from="0" data-to="{% if data.logistic_regression is not none %} {{data.logistic_regression}} {% else %} 0 {% endif %}" data-speed="5000" data-refresh-interval="50">1</span>
+								<span class="counter">{% if data.logistic_regression is not none %} {{data.logistic_regression|floatformat:3}} {% else %} 0 {% endif %}</span>
 								<span class="counter-label">Logistic Regression <br> Accuracy</span>
 							</div>
 						</div>
@@ -149,8 +149,8 @@
 									<i class="icon-check"></i>
 								</span>
 
-								<span class="counter js-counter" data-from="0" data-to="{% if data.knn is not none %} {{data.knn|floatformat:2}} {% else %} 0 {% endif %}" data-speed="5000" data-refresh-interval="50">1</span>
-								<span class="counter-label">KNN Accuracy</span>
+								<span class="counter">{% if data.dt is not none %} {{data.dt|floatformat:3}} {% else %} 0 {% endif %}</span>
+								<span class="counter-label">Decision Tree <br> Accuracy</span>
 							</div>
 						</div>
 					</div>

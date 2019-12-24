@@ -2,6 +2,7 @@ import pickle
 import datetime
 
 from sklearn import metrics
+import matplotlib.pyplot as plt
 from HRAnalysis.models import ModelDetail
 from sklearn.naive_bayes import GaussianNB
 from sklearn.metrics import accuracy_score
@@ -36,6 +37,13 @@ class NaiveBayes:
             pred_proba_nb = nb.predict_proba(self.x_test)[::, 1]
             fpr, tpr, _ = metrics.roc_curve(self.y_test, pred_proba_nb)
             auc_nb = metrics.roc_auc_score(self.y_test, pred_proba_nb)
+
+            plt.figure()
+            lw = 3
+            plt.plot(fpr, tpr, label="Naive Bayes, auc_nb = " + str(auc_nb))
+            plt.plot([0, 1], [0, 1], color='red', lw=lw, linestyle='dashed')
+            plt.legend(loc=4)
+            plt.savefig('./static/images/roc_nb.png')
 
             #Assign all score values to dict
             model_score_dict["model_running_performance"] = (model_running_performance.seconds/60)

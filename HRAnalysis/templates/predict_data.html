@@ -18,42 +18,182 @@
 		</div>
 	</header>
 
-	<div id="gtco-features">
-		<div class="gtco-container">
-			<div class="row">
+    <div id="gtco-features">
+        <div class="gtco-container">
+            <div class="row">
 
-				<div class="form" class="post-form">
-					<h3>Fill Fields</h3>
-					<form method="post"> {% csrf_token %}
-						<div class="row form-group">
-							<select name="algorithm" class="dropdown">
-								<option value="linear_regr">Linear Regression</option>
-								<option value="lojistic_regr">Lojistic Regression</option>
-								<option value="knn">KNN</option>
-							</select>
-						</div>
+                <div class="form" class="post-form">
+                    <h3>Fill Fields</h3>
+                    <form method="post"> {% csrf_token %}
+                        <div class="row form-group">
+                            <label for="algorithm">Select Model:</label>
+                            <select id="algorithm" name="algorithm" class="dropdown">
+                                <option value="adaboost"> Adaboost</option>
+                                <option value="dt">Decision Tree</option>
+                                <option value="knn">KNN</option>
+                                <option value="lda">Linear Discriminant Analysis</option>
+                                <option value="lgr">Logistic Regression</option>
+                                <option value="nb">Naive Bayes</option>
+                                <option value="ann">ANN</option>
+                                <option value="rf">Random Forest</option>
+                                <option value="svm">SVM</option>
+                            </select>
+                        </div>
 
-						<div class="row form-group">
-							<label for="fname">First Name</label>
-							<input type="text" id="fname" name="fname" placeholder="Your firstname" value="{{ data.fname }}" required>
+                        <div class="row form-group">
+                            <div class="row col-md-7 col-sm-7">
+                                <label class="col-md-5 col-sm-5" for="Age">Age</label>
+                                <input class="col-sm-offset-1" type="text" id="Age" name="Age"
+                                       placeholder="Please Insert Value" value="{{ data.Age }}" required>
+                            </div>
+                            <div class="row col-sm-offset-7">
+                                <label class="col-md-5 col-sm-5" for="DailyRate">Daily Rate</label>
+                                <input class="col-sm-offset-1" type="text" id="DailyRate" name="DailyRate"
+                                       placeholder="Please Insert Value" value="{{ data.DailyRate }}" required>
+                            </div>
+                            <div class="row col-md-7 col-sm-7">
+                                <label class="col-md-5 col-sm-5" for="DistanceFromHome">Distance From Home</label>
+                                <input class="col-sm-offset-1" type="text" id="DistanceFromHome" name="DistanceFromHome"
+                                       placeholder="Please Insert Value" value="{{ data.DistanceFromHome }}" required>
+                            </div>
+                            <div class="row col-sm-offset-7">
+                                <label class="col-md-5 col-sm-5" for="EducationField">Education Field</label>
+                                <input class="col-sm-offset-1" type="text" id="EducationField" name="EducationField"
+                                       placeholder="Please Insert Value" value="{{ data.EducationField }}" required>
+                            </div>
+                            <div class="row col-md-7 col-sm-7">
+                                <label class="col-md-5 col-sm-5" for="EnvironmentSatisfaction">Environment
+                                    Satisfaction</label>
+                                <input class="col-sm-offset-1" type="text" id="EnvironmentSatisfaction"
+                                       name="EnvironmentSatisfaction" placeholder="Please Insert Value"
+                                       value="{{ data.EnvironmentSatisfaction }}" required>
+                            </div>
+                            <div class="row col-sm-offset-7">
+                                <label class="col-md-5 col-sm-5" for="HourlyRate">Hourly Rate</label>
+                                <input class="col-sm-offset-1" type="text" id="HourlyRate" name="HourlyRate"
+                                       placeholder="Please Insert Value" value="{{ data.HourlyRate }}" required>
+                            </div>
+                            <div class="row col-md-7 col-sm-7">
+                                <label class="col-md-5 col-sm-5" for="JobInvolvement">Job Involvement</label>
+                                <input class="col-sm-offset-1" type="text" id="JobInvolvement" name="JobInvolvement"
+                                       placeholder="Please Insert Value" value="{{ data.JobInvolvement }}" required>
+                            </div>
+                            <div class="row col-sm-offset-7">
+                                <label class="col-md-5 col-sm-5" for="JobLevel">Job Level</label>
+                                <input class="col-sm-offset-1" type="text" id="JobLevel" name="JobLevel"
+                                       placeholder="Please Insert Value" value="{{ data.JobLevel }}" required>
+                            </div>
+                            <div class="row col-md-7 col-sm-7">
+                                <label class="col-md-5 col-sm-5" for="JobRole">Job Role</label>
+                                <input class="col-sm-offset-1" type="text" id="JobRole" name="JobRole"
+                                       placeholder="Please Insert Value" value="{{ data.JobRole }}" required>
+                            </div>
+                            <div class="row col-sm-offset-7">
+                                <label class="col-md-5 col-sm-5" for="JobSatisfaction">Job Satisfaction</label>
+                                <input class="col-sm-offset-1" type="text" id="JobSatisfaction" name="JobSatisfaction"
+                                       placeholder="Please Insert Value" value="{{ data.JobSatisfaction }}" required>
+                            </div>
+                            <div class="row col-md-7 col-sm-7">
+                                <label class="col-md-5 col-sm-5" for="MonthlyIncome">Monthly Income</label>
+                                <input class="col-sm-offset-1" type="text" id="MonthlyIncome" name="MonthlyIncome"
+                                       placeholder="Please Insert Value" value="{{ data.MonthlyIncome }}" required>
+                            </div>
+                            <div class="row col-sm-offset-7">
+                                <label class="col-md-5 col-sm-5" for="MonthlyRate">Monthly Rate</label>
+                                <input class="col-sm-offset-1" type="text" id="MonthlyRate" name="MonthlyRate"
+                                       placeholder="Please Insert Value" value="{{ data.MonthlyRate }}" required>
+                            </div>
+                            <div class="row col-md-7 col-sm-7">
+                                <label class="col-md-5 col-sm-5" for="NumCompaniesWorked">Num Companies Worked</label>
+                                <input class="col-sm-offset-1" type="text" id="NumCompaniesWorked"
+                                       name="NumCompaniesWorked" placeholder="Please Insert Value"
+                                       value="{{ data.NumCompaniesWorked }}" required>
+                            </div>
+                            <div class="row col-sm-offset-7">
+                                <label class="col-md-5 col-sm-5" for="OverTime">Over Time</label>
+                                <input class="col-sm-offset-1" type="text" id="OverTime" name="OverTime"
+                                       placeholder="Please Insert Value" value="{{ data.OverTime }}" required>
+                            </div>
+                            <div class="row col-md-7 col-sm-7">
+                                <label class="col-md-5 col-sm-5" for="PercentSalaryHike">Percent Salary Hike</label>
+                                <input class="col-sm-offset-1" type="text" id="PercentSalaryHike"
+                                       name="PercentSalaryHike" placeholder="Please Insert Value"
+                                       value="{{ data.PercentSalaryHike }}" required>
+                            </div>
+                            <div class="row col-sm-offset-7">
+                                <label class="col-md-5 col-sm-5" for="RelationshipSatisfaction">Relationship
+                                    Satisfaction</label>
+                                <input class="col-sm-offset-1" type="text" id="RelationshipSatisfaction"
+                                       name="RelationshipSatisfaction" placeholder="Please Insert Value"
+                                       value="{{ data.RelationshipSatisfaction }}" required>
+                            </div>
+                            <div class="row col-md-7 col-sm-7">
+                                <label class="col-md-5 col-sm-5" for="StockOptionLevel">Stock Option Level</label>
+                                <input class="col-sm-offset-1" type="text" id="StockOptionLevel" name="StockOptionLevel"
+                                       placeholder="Please Insert Value" value="{{ data.StockOptionLevel }}" required>
+                            </div>
+                            <div class="row col-sm-offset-7">
+                                <label class="col-md-5 col-sm-5" for="TotalWorkingYears">Total Working Years</label>
+                                <input class="col-sm-offset-1" type="text" id="TotalWorkingYears"
+                                       name="TotalWorkingYears" placeholder="Please Insert Value"
+                                       value="{{ data.TotalWorkingYears }}" required>
+                            </div>
+                            <div class="row col-md-7 col-sm-7">
+                                <label class="col-md-5 col-sm-5" for="TrainingTimesLastYear">Training Times Last
+                                    Year</label>
+                                <input class="col-sm-offset-1" type="text" id="TrainingTimesLastYear"
+                                       name="TrainingTimesLastYear" placeholder="Please Insert Value"
+                                       value="{{ data.TrainingTimesLastYear }}" required>
+                            </div>
+                            <div class="row col-sm-offset-7">
+                                <label class="col-md-5 col-sm-5" for="WorkLifeBalance">Work Life Balance</label>
+                                <input class="col-sm-offset-1" type="text" id="WorkLifeBalance" name="WorkLifeBalance"
+                                       placeholder="Please Insert Value" value="{{ data.WorkLifeBalance }}" required>
+                            </div>
+                            <div class="row col-md-7 col-sm-7">
+                                <label class="col-md-5 col-sm-5" for="YearsAtCompany">Years At Company</label>
+                                <input class="col-sm-offset-1" type="text" id="YearsAtCompany" name="YearsAtCompany"
+                                       placeholder="Please Insert Value" value="{{ data.YearsAtCompany }}" required>
+                            </div>
+                            <div class="row col-sm-offset-7">
+                                <label class="col-md-5 col-sm-5" for="YearsInCurrentRole">Years In Current Role</label>
+                                <input class="col-sm-offset-1" type="text" id="YearsInCurrentRole"
+                                       name="YearsInCurrentRole" placeholder="Please Insert Value"
+                                       value="{{ data.YearsInCurrentRole }}" required>
+                            </div>
+                            <div class="row col-md-7 col-sm-7">
+                                <label class="col-md-5 col-sm-5" for="YearsSinceLastPromotion">Years Since Last
+                                    Promotion</label>
+                                <input class="col-sm-offset-1" type="text" id="YearsSinceLastPromotion"
+                                       name="YearsSinceLastPromotion" placeholder="Please Insert Value"
+                                       value="{{ data.YearsSinceLastPromotion }}" required>
+                            </div>
+                            <div class="row col-sm-offset-7">
+                                <label class="col-md-5 col-sm-5" for="YearsWithCurrManager">Years With Curr
+                                    Manager</label>
+                                <input class="col-sm-offset-1" type="text" id="YearsWithCurrManager"
+                                       name="YearsWithCurrManager" placeholder="Please Insert Value"
+                                       value="{{ data.YearsWithCurrManager }}" required>
+                            </div>
 
-						</div>
 
-						{% if data.is_analysed is not True %}
-							<div class="form-group">
-								<input type="submit" value="Send Message" class="btn btn-primary">
-							</div>
-						{% endif %}
-					</form>
-				</div>
-			</div>
+                        </div>
 
-			{% if data.is_analysed is True %}
-				<div class="row">
-					<p>Deneme</p>
-				</div>
-			{% endif %}
-		</div>
-	</div>
+                        {% if data.is_analysed is not True %}
+                            <div class="form-group">
+                                <input type="submit" value="Predict Data" class="btn btn-primary">
+                            </div>
+                        {% endif %}
+                    </form>
+                </div>
+            </div>
+
+            {% if data.is_analysed is True %}
+                <div class="row">
+                    <p>Deneme</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
 
 {% endblock content %}

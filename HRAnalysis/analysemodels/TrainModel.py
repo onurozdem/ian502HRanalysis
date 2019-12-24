@@ -96,7 +96,7 @@ class TrainModels:
 
         # Drop unnecessary columns
         # These columns have same value on rows. Therefore they are removed.
-        data3 = data3.drop(['EmployeeCount','EmployeeNumber','Over18'], axis = 1)
+        data3 = data3.drop(['id','EmployeeCount','EmployeeNumber','Over18'], axis = 1)
 
         # Feature Selection
         rf = RandomForestClassifier()

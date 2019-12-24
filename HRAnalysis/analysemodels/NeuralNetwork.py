@@ -2,6 +2,7 @@ import pickle
 import datetime
 
 from sklearn import metrics
+import matplotlib.pyplot as plt
 from HRAnalysis.models import ModelDetail
 
 
@@ -58,11 +59,18 @@ class NeuralNetwork:
 
             # ROC Curve
             #pred_proba_rf = classifier.predict_proba(self.x_test)
-            pred_proba_rf = []
+            pred_proba_ann = []
             for i in classifier.predict_proba(self.x_test):
-                pred_proba_rf.append(i)
-            fpr, tpr, _ = metrics.roc_curve(self.y_test, pred_proba_rf)
-            auc_rf = metrics.roc_auc_score(self.y_test, pred_proba_rf)
+                pred_proba_ann.append(i)
+            fpr, tpr, _ = metrics.roc_curve(self.y_test, pred_proba_ann)
+            auc_ann = metrics.roc_auc_score(self.y_test, pred_proba_ann)
+
+            plt.figure()
+            lw = 3
+            plt.plot(fpr, tpr, label="Neural Network, auc_ann = " + str(auc_ann))
+            plt.plot([0, 1], [0, 1], color='red', lw=lw, linestyle='dashed')
+            plt.legend(loc=4)
+            plt.savefig('./static/images/roc_ann.png')
 
             # Assign all score values to dict
             model_score_dict["model_running_performance"] = (model_running_performance.seconds/60)
@@ -70,7 +78,7 @@ class NeuralNetwork:
             model_score_dict["conf_mat"] = conf_mat.tolist()
             model_score_dict["fpr"] = fpr.tolist()
             model_score_dict["tpr"] = tpr.tolist()
-            model_score_dict["auc"] = auc_rf
+            model_score_dict["auc"] = auc_ann
 
             md = ModelDetail(**{'AlgorithmName': 'ANN', 'ModelScoreDict': str(model_score_dict)})
             md.save()

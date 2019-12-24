@@ -173,8 +173,8 @@ function Matrix(options) {
 }
 
 // The table generation function
-function tabulate(data, columns) {
-    var table = d3.select("#dataView").append("table")
+function tabulate(id, data, columns) {
+    var table = d3.select(id).append("table")
             .attr("style", "margin-left: " + margin.left +"px"),
         thead = table.append("thead"),
         tbody = table.append("tbody");

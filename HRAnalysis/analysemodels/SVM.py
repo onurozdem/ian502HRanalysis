@@ -3,6 +3,7 @@ import datetime
 
 from sklearn.svm import SVC
 from sklearn import metrics
+import matplotlib.pyplot as plt
 from HRAnalysis.models import ModelDetail
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import confusion_matrix
@@ -58,6 +59,13 @@ class SVM:
             pred_proba_svm = svm2.predict_proba(self.x_test)[::, 1]
             fpr, tpr, _ = metrics.roc_curve(self.y_test, pred_proba_svm)
             auc_svm = metrics.roc_auc_score(self.y_test, pred_proba_svm)
+
+            plt.figure()
+            lw = 3
+            plt.plot(fpr, tpr, label="Support Vector Machine, auc_svm = " + str(auc_svm))
+            plt.plot([0, 1], [0, 1], color='red', lw=lw, linestyle='dashed')
+            plt.legend(loc=4)
+            plt.savefig('./static/images/roc_svm.png')
 
             #Assign all score values to dict
             model_score_dict["model_running_performance"] = (model_running_performance.seconds/60)
