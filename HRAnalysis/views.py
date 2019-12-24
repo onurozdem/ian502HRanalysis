@@ -19,9 +19,9 @@ def index(request):
         logistic_regr = ModelDetail.objects.filter(AlgorithmName='Decision Tree').order_by('Date').first()
         knn = ModelDetail.objects.filter(AlgorithmName='Random Forest').order_by('Date').first()
         data = {'row_number': row_number,
-                'linear_regression': json.loads(linear_regr.ModelScoreDict.replace("'",'"'))["accuracy"],
-                'logistic_regression': json.loads(logistic_regr.ModelScoreDict.replace("'",'"'))["accuracy"],
-                'knn': json.loads(knn.ModelScoreDict.replace("'",'"'))["accuracy"]}
+                'linear_regression': str(json.loads(linear_regr.ModelScoreDict.replace("'",'"'))["accuracy"]),
+                'logistic_regression': str(json.loads(logistic_regr.ModelScoreDict.replace("'",'"'))["accuracy"]),
+                'knn': str(json.loads(knn.ModelScoreDict.replace("'",'"'))["accuracy"])}
     return render(request, 'index.html', {'data': data})
 
 
@@ -39,26 +39,27 @@ def model_compare(request):
 
 def model_detail(request):
     check_require_train()
-    xdata = ["Apple", "Apricot", "Avocado", "Banana", "Boysenberries", "Blueberries", "Dates", "Grapefruit", "Kiwi",
-             "Lemon"]
-    ydata = [52, 48, 160, 94, 75, 71, 490, 82, 46, 17]
-    chartdata = {'x': xdata, 'y': ydata}
-    charttype = "pieChart"
-    chartcontainer = 'piechart_container'
-    data = {
-        'charttype': charttype,
-        'chartdata': chartdata,
-        'chartcontainer': chartcontainer,
-        'extra': {
-            'x_is_date': False,
-            'x_axis_format': '',
-            'tag_script_js': True,
-            'jquery_on_ready': False,
-        },
-        'rowLabel':["1","r","3","5"],
-        'colLabel': ["a","b","c","d"]
-    }
-    return render(request, 'model_detail.html', data)
+
+    data = {}
+    """if request.GET:
+        data = request.GET
+        #data = PredictForm.objects.filter(query__icontains=search)
+
+        #name = request.GET.get('algorithm')
+        #query = PredictForm.object.create(query=search, user_id=name)
+        #query.save()"""
+    if request.method == 'POST':
+        model_detail_form = ModelDetailFormData(request.POST)
+        long_algorithm_name = convert_algorithm_name(model_detail_form.pk['algorithm'])
+        if "algorithm" in model_detail_form.pk.keys():
+            model_detail_row = ModelDetail.objects.filter(AlgorithmName=long_algorithm_name).order_by('Date').first()
+            data['conf_mat'] = json.loads(model_detail_row.ModelScoreDict.replace("'", '"'))["conf_mat"]
+            data['algorithm'] = long_algorithm_name
+            data['is_analysed'] = True
+    else:
+        model_detail_form = ModelDetailFormData()
+
+    return render(request, 'model_detail.html', {'data': data})
 
 
 def data_detail(request):
@@ -130,5 +131,30 @@ def check_require_train():
             raise
     else:
         print("No need train model!")
+
+
+def convert_algorithm_name(name):
+    long_name = None
+
+    if name == "adaboost":
+        long_name = "Adaboost"
+    elif name == "dt":
+        long_name = "Decision Tree"
+    elif name == "knn":
+        long_name = "KNN"
+    elif name == "lda":
+        long_name = "Linear Discriminant Anaylsis"
+    elif name == "lgr":
+        long_name = "Lojistic Regression"
+    elif name == "nb":
+        long_name = "Naive Bayes"
+    elif name == "ann":
+        long_name = "ANN"
+    elif name == "rf":
+        long_name = "Random Forest"
+    elif name == "svm":
+        long_name = "SVM"
+
+    return long_name
 
 

@@ -1,5 +1,7 @@
 import csv
 import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
 
 from sklearn.preprocessing import LabelEncoder
 from sklearn.preprocessing import StandardScaler
@@ -16,8 +18,10 @@ class TrainModels:
         else:
             raise Exception("Train Models running unsuccessful. Data must be list type.")
 
-        x_train, x_test, y_train, y_test = self.all_data_preparation()
+
         try:
+            x_train, x_test, y_train, y_test = self.all_data_preparation()
+
             Adaboost.Adaboost(x_train, x_test, y_train, y_test).train()
             DecisionTree.DecisionTree(x_train, x_test, y_train, y_test).train()
             KNN.KNN(x_train, x_test, y_train, y_test).train()
@@ -65,29 +69,25 @@ class TrainModels:
                     tmp_list.append(heatmap_data[row][column])
                     tsv_writer.writerow(tmp_list)
 
-        with open('./static/data/box_plot1.csv', 'w', newline='') as out_file:
-            csv_writer = csv.writer(out_file, delimiter=',')
-            csv_writer.writerow(['Gender', 'Age'])
-            for row in self.data[['Gender','Age']].values.tolist():
-                csv_writer.writerow(row)
+        fig, ax = plt.subplots(figsize=(6, 6))
+        fig.subplots_adjust(left=0.15, top=0.94, bottom=0.1)
+        sns.boxplot('Gender', 'Age', data=self.data[['Gender', 'Age']], ax=ax)
+        plt.savefig('./static/images/box_plot_age_gender.png')
 
-        with open('./static/data/box_plot2.csv', 'w', newline='') as out_file:
-            csv_writer = csv.writer(out_file, delimiter=',')
-            csv_writer.writerow(['Gender', 'MonthlyIncome'])
-            for row in self.data[['Gender','MonthlyIncome']].values.tolist():
-                csv_writer.writerow(row)
+        fig, ax = plt.subplots(figsize=(6, 6))
+        fig.subplots_adjust(left=0.15, top=0.94, bottom=0.1)
+        sns.boxplot('Gender', 'MonthlyIncome', data=self.data[['Gender', 'MonthlyIncome']], ax=ax)
+        plt.savefig('./static/images/box_plot_income_gender.png')
 
-        with open('./static/data/box_plot3.csv', 'w', newline='') as out_file:
-            csv_writer = csv.writer(out_file, delimiter=',')
-            csv_writer.writerow(['JobRole', 'MonthlyIncome'])
-            for row in self.data[['JobRole', 'MonthlyIncome']].values.tolist():
-                csv_writer.writerow(row)
+        fig, ax = plt.subplots(figsize=(21, 6))
+        fig.subplots_adjust(left=0.05, top=0.94, bottom=0.1)
+        sns.boxplot('JobRole', 'MonthlyIncome', data=self.data[['JobRole', 'MonthlyIncome']], ax=ax)
+        plt.savefig('./static/images/box_plot_income_role.png')
 
-        with open('./static/data/box_plot4.csv', 'w', newline='') as out_file:
-            csv_writer = csv.writer(out_file, delimiter=',')
-            csv_writer.writerow(['DistanceFromHome', 'MonthlyIncome'])
-            for row in self.data[['DistanceFromHome', 'MonthlyIncome']].values.tolist():
-                csv_writer.writerow(row)
+        fig, ax = plt.subplots(figsize=(16, 6))
+        fig.subplots_adjust(left=0.05, top=0.94, bottom=0.1)
+        sns.boxplot('DistanceFromHome', 'MonthlyIncome', data=self.data[['DistanceFromHome', 'MonthlyIncome']], ax=ax)
+        plt.savefig('./static/images/box_plot_distance_income.png')
 
         # Spliting target column
 

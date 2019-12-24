@@ -48,3 +48,7 @@ class ModelDetail(models.Model):
 class PredictFormData(models.Model):
     algortihm=models.CharField(max_length=200)
     fname=models.CharField(max_length=200)
+
+
+class ModelDetailFormData(models.Model):
+    algortihm=models.CharField(max_length=200)
