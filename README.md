@@ -32,10 +32,10 @@ CRISP-DM
 
 ### Project Infrastructure
 We will use Python for model development and front-end services. We will develop with Django framework for the front side. We will keep the data on SQLite. Technology stack:
-•	Python
-•	Django 
-•	SQLite
-•	Google Cloud Compute Engine
+-	Python
+-	Django 
+-	SQLite
+-	Google Cloud Compute Engine
 
 <br>
 
