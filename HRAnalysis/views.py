@@ -96,24 +96,36 @@ def model_compare(request):
             # plot
             plt.figure()
             plt.plot('xvalues', 'yvalues', data=plt_df1)
+            plt.title('Model Accuracy History')
+            plt.xlabel('Accuracy')
+            plt.ylabel('Date Time')
             plt.savefig('./static/images/line_{}.png'.format(data1['short_algorithm']))
 
             plt_df2 = pd.DataFrame({'xvalues': date_list2, 'yvalues': accuracy_list2})
             # plot
             plt.figure()
             plt.plot('xvalues', 'yvalues', data=plt_df2)
+            plt.title('Model Accuracy History')
+            plt.xlabel('Accuracy')
+            plt.ylabel('Date Time')
             plt.savefig('./static/images/line_{}.png'.format(data2['short_algorithm']))
 
             plt_df1 = pd.DataFrame({'xvalues': date_list1, 'yvalues': performance_list1})
             # plot
             plt.figure()
             plt.plot('xvalues', 'yvalues', data=plt_df1)
+            plt.title('Model Running Performance History')
+            plt.xlabel('Time(minute)')
+            plt.ylabel('Date Time')
             plt.savefig('./static/images/line_perf_{}.png'.format(data1['short_algorithm']))
 
             plt_df2 = pd.DataFrame({'xvalues': date_list2, 'yvalues': performance_list2})
             # plot
             plt.figure()
             plt.plot('xvalues', 'yvalues', data=plt_df2)
+            plt.title('Model Running Performance History')
+            plt.xlabel('Time(minute)')
+            plt.ylabel('Date Time')
             plt.savefig('./static/images/line_perf_{}.png'.format(data2['short_algorithm']))
 
             data1['line_file'] = 'line_{}.png'.format(data1['short_algorithm'])
