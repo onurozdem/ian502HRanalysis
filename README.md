@@ -17,8 +17,6 @@ Finally, our goal is to develop a dynamic, self-updating and living project.
 
 ### Dataset to be Used
 https://www.kaggle.com/pavansubhasht/ibm-hr-analytics-attrition-dataset#WA_Fn-UseC_-HR-Employee-Attrition.csv
-This is a synthetic dataset created by the IBM Data Scientists with a main purpose of demonstrating the analytics tool for employee attrition. So, it's useful for testing our own models that require employee data but could be useless for drawing any real-world conclusions.
-There are 35 columns and 1470 rows in the data. 26 of the columns are Numerical and 9 are Nominal marked with (*). Below is the list of the columns. 
 
 <br>
 
