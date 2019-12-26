@@ -64,6 +64,9 @@ class RandomForest:
             lw = 3
             plt.plot(fpr, tpr, label="Random Forest, auc_rf = " + str(auc_rf))
             plt.plot([0, 1], [0, 1], color='red', lw=lw, linestyle='dashed')
+            plt.title('Random Forest ROC')
+            plt.xlabel('False Positive Rate')
+            plt.ylabel('True Positive Rate')
             plt.legend(loc=4)
             plt.savefig('./static/images/roc_rf.png')
 
@@ -80,6 +83,7 @@ class RandomForest:
 
             # Export model
             with open('./HRAnalysis/analysemodels/models/RF.pkl', 'wb') as model_file:
-                pickle.dump(rf2, model_file)
+                #pickle.dump(rf2, model_file)
+                pickle.dump({"columns":self.x_test.columns.tolist(),"model":rf2}, model_file)
         except Exception as e:
             raise e

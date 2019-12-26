@@ -42,6 +42,22 @@
 
                         <div class="row form-group">
                             <div class="row col-md-7 col-sm-7">
+                                <label class="col-md-5 col-sm-5" for="BusinessTravel">Business Travel</label>
+                                <select id="BusinessTravel" name="BusinessTravel" class="dropdown col-sm-offset-1">
+                                    <option value="Travel_Rarely"> Travel Rarely</option>
+                                    <option value="Travel_Frequently">Travel Frequently</option>
+                                    <option value="Non-Travel">Non Travel</option>
+                                </select>
+                            </div>
+                            <div class="row col-sm-offset-7">
+                                <label class="col-md-5 col-sm-5" for="Department">Department</label>
+                                <select id="Department" name="Department" class="dropdown col-sm-offset-1">
+                                    <option value="Sales"> Sales</option>
+                                    <option value="Research & Development">Research & Development</option>
+                                    <option value="Human Resources">Human Resources</option>
+                                </select>
+                            </div>
+                            <div class="row col-md-7 col-sm-7">
                                 <label class="col-md-5 col-sm-5" for="Age">Age</label>
                                 <input class="col-sm-offset-1" type="text" id="Age" name="Age"
                                        placeholder="Please Insert Value" value="{{ data.Age }}" required>
@@ -58,15 +74,28 @@
                             </div>
                             <div class="row col-sm-offset-7">
                                 <label class="col-md-5 col-sm-5" for="EducationField">Education Field</label>
-                                <input class="col-sm-offset-1" type="text" id="EducationField" name="EducationField"
-                                       placeholder="Please Insert Value" value="{{ data.EducationField }}" required>
+                                <select id="EducationField" name="EducationField" class="dropdown col-sm-offset-1">
+                                    <option value="Human Resources"> Human Resources</option>
+                                    <option value="Life Sciences">Life Sciences</option>
+                                    <option value="Marketing">Marketing</option>
+                                    <option value="Medical">Medical</option>
+                                    <option value="Technical Degree">Technical Degree</option>
+                                    <option value="Other">Other</option>
+                                    <option value="ann">ANN</option>
+                                    <option value="rf">Random Forest</option>
+                                    <option value="svm">SVM</option>
+                                </select>
                             </div>
                             <div class="row col-md-7 col-sm-7">
                                 <label class="col-md-5 col-sm-5" for="EnvironmentSatisfaction">Environment
                                     Satisfaction</label>
-                                <input class="col-sm-offset-1" type="text" id="EnvironmentSatisfaction"
-                                       name="EnvironmentSatisfaction" placeholder="Please Insert Value"
-                                       value="{{ data.EnvironmentSatisfaction }}" required>
+                                <select id="EnvironmentSatisfaction" name="EnvironmentSatisfaction"
+                                        class="dropdown col-sm-offset-1">
+                                    <option value="1"> Low</option>
+                                    <option value="2">Medium</option>
+                                    <option value="3">High</option>
+                                    <option value="4">Very High</option>
+                                </select>
                             </div>
                             <div class="row col-sm-offset-7">
                                 <label class="col-md-5 col-sm-5" for="HourlyRate">Hourly Rate</label>
@@ -75,8 +104,12 @@
                             </div>
                             <div class="row col-md-7 col-sm-7">
                                 <label class="col-md-5 col-sm-5" for="JobInvolvement">Job Involvement</label>
-                                <input class="col-sm-offset-1" type="text" id="JobInvolvement" name="JobInvolvement"
-                                       placeholder="Please Insert Value" value="{{ data.JobInvolvement }}" required>
+                                <select id="JobInvolvement" name="JobInvolvement" class="dropdown col-sm-offset-1">
+                                    <option value="1"> Low</option>
+                                    <option value="2">Medium</option>
+                                    <option value="3">High</option>
+                                    <option value="4">Very High</option>
+                                </select>
                             </div>
                             <div class="row col-sm-offset-7">
                                 <label class="col-md-5 col-sm-5" for="JobLevel">Job Level</label>
@@ -84,14 +117,62 @@
                                        placeholder="Please Insert Value" value="{{ data.JobLevel }}" required>
                             </div>
                             <div class="row col-md-7 col-sm-7">
+                                <label class="col-md-5 col-sm-5" for="Education">Education</label>
+                                <select id="Education" name="Education" class="dropdown col-sm-offset-1">
+                                    <option value="1"> Below College</option>
+                                    <option value="2">College</option>
+                                    <option value="3">Bachelor</option>
+                                    <option value="4">Master</option>
+                                    <option value="5">Doctor</option>
+                                </select>
+                            </div>
+                            <div class="row col-sm-offset-7">
+                                <label class="col-md-5 col-sm-5" for="Gender">Gender</label>
+                                <select id="Gender" name="Gender" class="dropdown col-sm-offset-1">
+                                    <option value="Male"> Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
+                            </div>
+                            <div class="row col-md-7 col-sm-7">
+                                <label class="col-md-5 col-sm-5" for="MaritalStatus">Marital Status</label>
+                                <select id="MaritalStatus" name="MaritalStatus" class="dropdown col-sm-offset-1">
+                                    <option value="Single"> Single</option>
+                                    <option value="Married">Married</option>
+                                    <option value="Divorced">Divorced</option>
+                                </select>
+                            </div>
+                            <div class="row col-sm-offset-7">
+                                <label class="col-md-5 col-sm-5" for="PerformanceRating">Performance Rating</label>
+                                <select id="PerformanceRating" name="PerformanceRating"
+                                        class="dropdown col-sm-offset-1">
+                                    <option value="1"> Low</option>
+                                    <option value="2">Good</option>
+                                    <option value="3">Excellent</option>
+                                    <option value="4">Outstanding</option>
+                                </select>
+                            </div>
+                            <div class="row col-md-7 col-sm-7">
                                 <label class="col-md-5 col-sm-5" for="JobRole">Job Role</label>
-                                <input class="col-sm-offset-1" type="text" id="JobRole" name="JobRole"
-                                       placeholder="Please Insert Value" value="{{ data.JobRole }}" required>
+                                <select id="JobRole" name="JobRole" class="dropdown col-sm-offset-1">
+                                    <option value="Healthcare Representative"> Healthcare Representative</option>
+                                    <option value="Human Resources">Human Resources</option>
+                                    <option value="Laboratory Technician">Laboratory Technician</option>
+                                    <option value="Manager">Manager</option>
+                                    <option value="Manufacturing Director">Manufacturing Director</option>
+                                    <option value="Research Director">Research Director</option>
+                                    <option value="Research Scientist">Research Scientist</option>
+                                    <option value="Sales Executive">Sales Executive</option>
+                                    <option value="Sales Representative">Sales Representative</option>
+                                </select>
                             </div>
                             <div class="row col-sm-offset-7">
                                 <label class="col-md-5 col-sm-5" for="JobSatisfaction">Job Satisfaction</label>
-                                <input class="col-sm-offset-1" type="text" id="JobSatisfaction" name="JobSatisfaction"
-                                       placeholder="Please Insert Value" value="{{ data.JobSatisfaction }}" required>
+                                <select id="JobSatisfaction" name="JobSatisfaction" class="dropdown col-sm-offset-1">
+                                    <option value="1"> Low</option>
+                                    <option value="2">Medium</option>
+                                    <option value="3">High</option>
+                                    <option value="4">Very High</option>
+                                </select>
                             </div>
                             <div class="row col-md-7 col-sm-7">
                                 <label class="col-md-5 col-sm-5" for="MonthlyIncome">Monthly Income</label>
@@ -111,8 +192,10 @@
                             </div>
                             <div class="row col-sm-offset-7">
                                 <label class="col-md-5 col-sm-5" for="OverTime">Over Time</label>
-                                <input class="col-sm-offset-1" type="text" id="OverTime" name="OverTime"
-                                       placeholder="Please Insert Value" value="{{ data.OverTime }}" required>
+                                <select id="OverTime" name="OverTime" class="dropdown col-sm-offset-1">
+                                    <option value="Yes"> Yes</option>
+                                    <option value="No">No</option>
+                                </select>
                             </div>
                             <div class="row col-md-7 col-sm-7">
                                 <label class="col-md-5 col-sm-5" for="PercentSalaryHike">Percent Salary Hike</label>
@@ -123,9 +206,13 @@
                             <div class="row col-sm-offset-7">
                                 <label class="col-md-5 col-sm-5" for="RelationshipSatisfaction">Relationship
                                     Satisfaction</label>
-                                <input class="col-sm-offset-1" type="text" id="RelationshipSatisfaction"
-                                       name="RelationshipSatisfaction" placeholder="Please Insert Value"
-                                       value="{{ data.RelationshipSatisfaction }}" required>
+                                <select id="RelationshipSatisfaction" name="RelationshipSatisfaction"
+                                        class="dropdown col-sm-offset-1">
+                                    <option value="1"> Low</option>
+                                    <option value="2">Medium</option>
+                                    <option value="3">High</option>
+                                    <option value="4">Very High</option>
+                                </select>
                             </div>
                             <div class="row col-md-7 col-sm-7">
                                 <label class="col-md-5 col-sm-5" for="StockOptionLevel">Stock Option Level</label>
@@ -147,8 +234,12 @@
                             </div>
                             <div class="row col-sm-offset-7">
                                 <label class="col-md-5 col-sm-5" for="WorkLifeBalance">Work Life Balance</label>
-                                <input class="col-sm-offset-1" type="text" id="WorkLifeBalance" name="WorkLifeBalance"
-                                       placeholder="Please Insert Value" value="{{ data.WorkLifeBalance }}" required>
+                                <select id="WorkLifeBalance" name="WorkLifeBalance" class="dropdown col-sm-offset-1">
+                                    <option value="1"> Bad</option>
+                                    <option value="2">Good</option>
+                                    <option value="3">Better</option>
+                                    <option value="4">Best</option>
+                                </select>
                             </div>
                             <div class="row col-md-7 col-sm-7">
                                 <label class="col-md-5 col-sm-5" for="YearsAtCompany">Years At Company</label>
@@ -175,25 +266,49 @@
                                        name="YearsWithCurrManager" placeholder="Please Insert Value"
                                        value="{{ data.YearsWithCurrManager }}" required>
                             </div>
+                            <div class="row col-md-7 col-sm-7">
+                                <label class="col-md-5 col-sm-5" for="StandardHours">Standard Hours</label>
+                                <input class="col-sm-offset-1" type="text" id="StandardHours"
+                                       name="StandardHours" placeholder="Please Insert Value"
+                                       value="{{ data.StandardHours }}" required>
+                            </div>
 
 
                         </div>
 
-                        {% if data.is_analysed is not True %}
-                            <div class="form-group">
-                                <input type="submit" value="Predict Data" class="btn btn-primary">
-                            </div>
-                        {% endif %}
+                        <div class="form-group">
+                            <input type="submit" value="Predict Data" class="btn btn-primary">
+                        </div>
                     </form>
                 </div>
             </div>
 
             {% if data.is_analysed is True %}
-                <div class="row">
-                    <p>Deneme</p>
+                <div class="row" style="margin-top: 40px;">
+                    <h1 style="color:OrangeRed;">{{ data.is_attrition }}</h1>
                 </div>
             {% endif %}
         </div>
     </div>
+
+    <script>
+        $( document ).ready(function() {
+            $("#algorithm").val("{{data.short_algorithm|safe}}");
+            $("#EnvironmentSatisfaction").val("{{data.EnvironmentSatisfaction|safe}}");
+            $("#JobInvolvement").val("{{data.JobInvolvement|safe}}");
+            $("#Education").val("{{data.Education|safe}}");
+            $("#PerformanceRating").val("{{data.PerformanceRating|safe}}");
+            $("#JobSatisfaction").val("{{data.JobSatisfaction|safe}}");
+            $("#RelationshipSatisfaction").val("{{data.RelationshipSatisfaction|safe}}");
+            $("#JobRole").val("{{data.JobRole|safe}}");
+            $("#MaritalStatus").val("{{data.MaritalStatus|safe}}");
+            $("#Gender").val("{{data.Gender|safe}}");
+            $("#EducationField").val("{{data.EducationField|safe}}");
+            $("#Department").val("{{data.Department|safe}}");
+            $("#BusinessTravel").val("{{data.BusinessTravel|safe}}");
+            $("#WorkLifeBalance").val("{{data.WorkLifeBalance|safe}}");
+
+        });
+    </script>
 
 {% endblock content %}

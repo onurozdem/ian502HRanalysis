@@ -59,6 +59,9 @@ class DecisionTree:
             lw = 3
             plt.plot(fpr, tpr, label="Decision Tree, auc_dt = " + str(auc_dt))
             plt.plot([0, 1], [0, 1], color='red', lw=lw, linestyle='dashed')
+            plt.title('Decision Tree ROC')
+            plt.xlabel('False Positive Rate')
+            plt.ylabel('True Positive Rate')
             plt.legend(loc=4)
             plt.savefig('./static/images/roc_dt.png')
 
@@ -75,6 +78,7 @@ class DecisionTree:
 
             # Export model
             with open('./HRAnalysis/analysemodels/models/DecisionTree.pkl', 'wb') as model_file:
-                pickle.dump(dt2, model_file)
+                #pickle.dump(dt2, model_file)
+                pickle.dump({"columns": self.x_test.columns.tolist(), "model": dt2}, model_file)
         except Exception as e:
             raise e

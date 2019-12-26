@@ -106,7 +106,7 @@
 		</div>
 	</div>
 
-	<div id="gtco-counter" class="gtco-bg gtco-cover gtco-counter" style="background-image:url({% static 'images/img_bg_2.jpg' %});">
+	<div id="gtco-counter" class="gtco-bg gtco-cover gtco-counter" style="background-image:url({% static 'images/img_bg_2.jpg' %}); height:1500px;">
 		<div class="overlay"></div>
 		<div class="gtco-container">
 			<div class="row">
@@ -156,8 +156,82 @@
 					</div>
 				</div>
 			</div>
+            <div class="row">
+				<div class="display-t">
+					<div class="display-tc">
+						<div class="col-md-4 col-sm-6 animate-box">
+							<div class="feature-center">
+								<span class="icon">
+									<i class="icon-check"></i>
+								</span>
+
+								<span class="counter">{% if data.ada is not none %} {{data.ada|floatformat:3}} {% else %} 0 {% endif %}</span>
+								<span class="counter-label">Adaboost <br> Accuracy</span>
+							</div>
+						</div>
+						<div class="col-md-4 col-sm-6 animate-box">
+							<div class="feature-center">
+								<span class="icon">
+									<i class="icon-check"></i>
+								</span>
+
+								<span class="counter">{% if data.knn is not none %} {{data.knn|floatformat:3}} {% else %} 0 {% endif %}</span>
+								<span class="counter-label">KNN <br> Accuracy</span>
+							</div>
+						</div>
+						<div class="col-md-4 col-sm-6 animate-box">
+							<div class="feature-center">
+								<span class="icon">
+									<i class="icon-check"></i>
+								</span>
+
+								<span class="counter">{% if data.lda is not none %} {{data.lda|floatformat:3}} {% else %} 0 {% endif %}</span>
+								<span class="counter-label">Linear Discriminant Analysis <br> Accuracy</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+            <div class="row">
+				<div class="display-t">
+					<div class="display-tc">
+						<div class="col-md-4 col-sm-6 animate-box">
+							<div class="feature-center">
+								<span class="icon">
+									<i class="icon-check"></i>
+								</span>
+
+								<span class="counter">{% if data.nb is not none %} {{data.nb|floatformat:3}} {% else %} 0 {% endif %}</span>
+								<span class="counter-label">Naive Bayes <br> Accuracy</span>
+							</div>
+						</div>
+						<div class="col-md-4 col-sm-6 animate-box">
+							<div class="feature-center">
+								<span class="icon">
+									<i class="icon-check"></i>
+								</span>
+
+								<span class="counter">{% if data.ann is not none %} {{data.ann|floatformat:3}} {% else %} 0 {% endif %}</span>
+								<span class="counter-label">ANN<br> Accuracy</span>
+							</div>
+						</div>
+						<div class="col-md-4 col-sm-6 animate-box">
+							<div class="feature-center">
+								<span class="icon">
+									<i class="icon-check"></i>
+								</span>
+
+								<span class="counter">{% if data.svm is not none %} {{data.svm|floatformat:3}} {% else %} 0 {% endif %}</span>
+								<span class="counter-label">SVM<br> Accuracy</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
+
+
 
 {% endblock content %}
 

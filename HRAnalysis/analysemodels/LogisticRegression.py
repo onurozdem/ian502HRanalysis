@@ -56,6 +56,9 @@ class LR:
             lw = 3
             plt.plot(fpr, tpr, label="Logistic Regression, auc_logreg = " + str(auc_logreg))
             plt.plot([0, 1], [0, 1], color='red', lw=lw, linestyle='dashed')
+            plt.title('Logistic Regression ROC')
+            plt.xlabel('False Positive Rate')
+            plt.ylabel('True Positive Rate')
             plt.legend(loc=4)
             plt.savefig('./static/images/roc_logr.png')
 
@@ -72,6 +75,7 @@ class LR:
 
             # Export model
             with open('./HRAnalysis/analysemodels/models/LogReg.pkl', 'wb') as model_file:
-                pickle.dump(logreg2, model_file)
+                #pickle.dump(logreg2, model_file)
+                pickle.dump({"columns": self.x_test.columns.tolist(), "model": logreg2}, model_file)
         except Exception as e:
             raise e

@@ -1,4 +1,4 @@
-import pickle
+import json
 import datetime
 
 from sklearn import metrics
@@ -69,6 +69,9 @@ class NeuralNetwork:
             lw = 3
             plt.plot(fpr, tpr, label="Neural Network, auc_ann = " + str(auc_ann))
             plt.plot([0, 1], [0, 1], color='red', lw=lw, linestyle='dashed')
+            plt.title('Neural Network ROC')
+            plt.xlabel('False Positive Rate')
+            plt.ylabel('True Positive Rate')
             plt.legend(loc=4)
             plt.savefig('./static/images/roc_ann.png')
 
@@ -84,8 +87,9 @@ class NeuralNetwork:
             md.save()
 
             # Export model
-            """with open('./HRAnalysis/analysemodels/models/ANN.pkl', 'wb') as model_file:
-                pickle.dump(classifier, model_file)"""
             classifier.save('./HRAnalysis/analysemodels/models/ANN.h5')
+            with open('./HRAnalysis/analysemodels/models/ann.txt', 'w') as f:
+                row = {"columns": self.x_test.columns.tolist()}
+                json.dump(row, f)
         except Exception as e:
             raise e

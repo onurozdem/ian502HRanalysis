@@ -1,10 +1,13 @@
+import h5py
 import json
+import pickle
 import datetime
+import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
 from HRAnalysis.models import *
-from HRAnalysis.forms import PredictForm
+from sklearn.preprocessing import LabelEncoder
 from HRAnalysis.analysemodels import TrainModel
 from django.shortcuts import render, HttpResponse
 
@@ -16,9 +19,21 @@ def index(request):
         logistic_regr = ModelDetail.objects.filter(AlgorithmName='Logistic Regression').order_by('-Date').first()
         dt = ModelDetail.objects.filter(AlgorithmName='Decision Tree').order_by('-Date').first()
         rf = ModelDetail.objects.filter(AlgorithmName='Random Forest').order_by('-Date').first()
+        ada = ModelDetail.objects.filter(AlgorithmName='Adaboost').order_by('-Date').first()
+        knn = ModelDetail.objects.filter(AlgorithmName='KNN').order_by('-Date').first()
+        lda = ModelDetail.objects.filter(AlgorithmName='Linear Discriminant Analysis').order_by('-Date').first()
+        nb = ModelDetail.objects.filter(AlgorithmName='Naive Bayes').order_by('-Date').first()
+        ann = ModelDetail.objects.filter(AlgorithmName='ANN').order_by('-Date').first()
+        svm = ModelDetail.objects.filter(AlgorithmName='SVM').order_by('-Date').first()
         data = {'row_number': row_number,
                 'dt': str(json.loads(dt.ModelScoreDict.replace("'",'"'))["accuracy"]),
                 'logistic_regression': str(json.loads(logistic_regr.ModelScoreDict.replace("'",'"'))["accuracy"]),
+                'ada': str(json.loads(ada.ModelScoreDict.replace("'",'"'))["accuracy"]),
+                'knn': str(json.loads(knn.ModelScoreDict.replace("'",'"'))["accuracy"]),
+                'lda': str(json.loads(lda.ModelScoreDict.replace("'",'"'))["accuracy"]),
+                'nb': str(json.loads(nb.ModelScoreDict.replace("'",'"'))["accuracy"]),
+                'ann': str(json.loads(ann.ModelScoreDict.replace("'",'"'))["accuracy"]),
+                'svm': str(json.loads(svm.ModelScoreDict.replace("'",'"'))["accuracy"]),
                 'rf': str(json.loads(rf.ModelScoreDict.replace("'",'"'))["accuracy"])}
     return render(request, 'index.html', {'data': data})
 
@@ -147,12 +162,18 @@ def model_detail(request):
             # plot
             plt.figure()
             plt.plot('xvalues', 'yvalues', data=plt_df)
+            plt.title('Model Accuracy History')
+            plt.xlabel('Accuracy')
+            plt.ylabel('Date Time')
             plt.savefig('./static/images/line_{}.png'.format(data['short_algorithm']))
 
             plt_df = pd.DataFrame({'xvalues': date_list, 'yvalues': performance_list})
             # plot
             plt.figure()
             plt.plot('xvalues', 'yvalues', data=plt_df)
+            plt.title('Model Running Performance History')
+            plt.xlabel('Time(minute)')
+            plt.ylabel('Date Time')
             plt.savefig('./static/images/line_perf_{}.png'.format(data['short_algorithm']))
 
             data['line_file'] = 'line_{}.png'.format(data['short_algorithm'])
@@ -191,11 +212,13 @@ def data_detail(request):
 
 def predict_data(request):
     check_require_train()
-    data = {}
+    response_data = {}
     if request.method == 'POST':
         predict_form = PredictFormData(request.POST)
         if "algorithm" in predict_form.pk.keys():
-            data['Algorithm'] = predict_form.pk['Algorithm']
+            algorithm = predict_form.pk['algorithm']
+
+            data = {}
             data['Age'] = predict_form.pk['Age']
             data['DailyRate'] = predict_form.pk['DailyRate']
             data['DistanceFromHome'] = predict_form.pk['DistanceFromHome']
@@ -220,13 +243,69 @@ def predict_data(request):
             data['YearsInCurrentRole'] = predict_form.pk['YearsInCurrentRole']
             data['YearsSinceLastPromotion'] = predict_form.pk['YearsSinceLastPromotion']
             data['YearsWithCurrManager'] = predict_form.pk['YearsWithCurrManager']
+            data['BusinessTravel'] = predict_form.pk['BusinessTravel']
+            data['Department'] = predict_form.pk['Department']
+            data['Education'] = predict_form.pk['Education']
+            data['Gender'] = predict_form.pk['Gender']
+            data['MaritalStatus'] = predict_form.pk['MaritalStatus']
+            data['PerformanceRating'] = predict_form.pk['PerformanceRating']
+            data['StandardHours'] = predict_form.pk['StandardHours']
 
-            data['is_analysed'] = True
-            return HttpResponse(json.dumps({'data': data}))
+            model_file_name = get_model_file_name(algorithm)
+
+            if algorithm == "ann":
+                import tensorflow.keras as kr
+
+                model_file_data = {}
+                model_file_data["model"] = kr.models.load_model('./HRAnalysis/analysemodels/models/{}'.format(model_file_name))
+
+                with open('./HRAnalysis/analysemodels/models/ann.txt', 'r') as f:
+                    model_file_data["columns"] = json.load(f)["columns"]
+            else:
+                with open('./HRAnalysis/analysemodels/models/{}'.format(model_file_name), 'rb') as f:
+                    model_file_data = pickle.load(f)
+
+            predict_data_dict = {}
+            for i in model_file_data["columns"]:
+                predict_data_dict[i] = data[i]
+                response_data[i] = data[i]
+
+            predict_data = pd.DataFrame(predict_data_dict, index=[0])
+
+            le = LabelEncoder()
+            data2 = predict_data.apply(le.fit_transform)
+
+            y_pred = model_file_data["model"].predict(data2)
+
+            data['Attrition'] = y_pred
+            udm = UnprocessedData(**data)
+            udm.save()
+
+            if int(y_pred[0]) == 1:
+                response_data["is_attrition"] = "Employee will be attrition."
+            else:
+                response_data["is_attrition"] = "Employee won't be attrition."
+
+            response_data['is_analysed'] = True
+            response_data['short_algorithm'] = algorithm
     else:
-        predict_form = PredictForm()
+        predict_form = PredictFormData()
+        response_data['short_algorithm'] = "adaboost"
+        response_data["EnvironmentSatisfaction"] = "1"
+        response_data["JobInvolvement"] = "1"
+        response_data["Education"] = "1"
+        response_data["PerformanceRating"] = "1"
+        response_data["JobSatisfaction"] = "1"
+        response_data["RelationshipSatisfaction"] = "1"
+        response_data["WorkLifeBalance"] = "1"
+        response_data["JobRole"] = "Healthcare Representative"
+        response_data["MaritalStatus"] = "Single"
+        response_data["Gender"] = "Male"
+        response_data["EducationField"] = "Human Resources"
+        response_data["Department"] = "Sales"
+        response_data["BusinessTravel"] = "Travel_Rarely"
 
-    return render(request, 'predict_data.html', {'data':data})
+    return render(request, 'predict_data.html', {'data':response_data})
 
 
 def contact(request):
@@ -302,6 +381,27 @@ def get_roc_file_name(name):
 
     return file_name
 
-def run_predictor(algorithm_name):
-    pass
 
+def get_model_file_name(name):
+    file_name = None
+
+    if name == "adaboost":
+        file_name = "Adaboost.pkl"
+    elif name == "dt":
+        file_name = "DecisionTree.pkl"
+    elif name == "knn":
+        file_name = "KNN.pkl"
+    elif name == "lda":
+        file_name = "LDA.pkl"
+    elif name == "lgr":
+        file_name = "LogReg.pkl"
+    elif name == "nb":
+        file_name = "NB.pkl"
+    elif name == "ann":
+        file_name = "ANN.h5"
+    elif name == "rf":
+        file_name = "RF.pkl"
+    elif name == "svm":
+        file_name = "SVM.pkl"
+
+    return file_name

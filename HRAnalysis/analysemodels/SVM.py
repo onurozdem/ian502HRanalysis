@@ -64,6 +64,9 @@ class SVM:
             lw = 3
             plt.plot(fpr, tpr, label="Support Vector Machine, auc_svm = " + str(auc_svm))
             plt.plot([0, 1], [0, 1], color='red', lw=lw, linestyle='dashed')
+            plt.title('Support Vector Machine ROC')
+            plt.xlabel('False Positive Rate')
+            plt.ylabel('True Positive Rate')
             plt.legend(loc=4)
             plt.savefig('./static/images/roc_svm.png')
 
@@ -80,6 +83,7 @@ class SVM:
 
             # Export model
             with open('./HRAnalysis/analysemodels/models/SVM.pkl', 'wb') as model_file:
-                pickle.dump(svm2, model_file)
+                #pickle.dump(svm2, model_file)
+                pickle.dump({"columns": self.x_test.columns.tolist(), "model": svm2}, model_file)
         except Exception as e:
             raise e

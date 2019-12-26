@@ -58,6 +58,9 @@ class KNN:
             lw = 3
             plt.plot(fpr, tpr, label="KNN, auc_knn = " + str(auc_knn))
             plt.plot([0, 1], [0, 1], color='red', lw=lw, linestyle='dashed')
+            plt.title('KNN ROC')
+            plt.xlabel('False Positive Rate')
+            plt.ylabel('True Positive Rate')
             plt.legend(loc=4)
             plt.savefig('./static/images/roc_knn.png')
 
@@ -74,6 +77,7 @@ class KNN:
 
             # Export model
             with open('./HRAnalysis/analysemodels/models/KNN.pkl', 'wb') as model_file:
-                pickle.dump(knn2, model_file)
+                #pickle.dump(knn2, model_file)
+                pickle.dump({"columns": self.x_test.columns.tolist(), "model": knn2}, model_file)
         except Exception as e:
             raise e

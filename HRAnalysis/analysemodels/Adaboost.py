@@ -63,6 +63,9 @@ class Adaboost:
             lw = 3
             plt.plot(fpr, tpr, label="Adaboost, auc_ada = " + str(auc_ada))
             plt.plot([0, 1], [0, 1], color='red', lw=lw, linestyle='dashed')
+            plt.title('Adaboost ROC')
+            plt.xlabel('False Positive Rate')
+            plt.ylabel('True Positive Rate')
             plt.legend(loc=4)
             plt.savefig('./static/images/roc_ada.png')
 
@@ -79,6 +82,7 @@ class Adaboost:
 
             # Export model
             with open('./HRAnalysis/analysemodels/models/Adaboost.pkl', 'wb') as model_file:
-                pickle.dump(ada2, model_file)
+                #pickle.dump(ada2, model_file)
+                pickle.dump({"columns": self.x_test.columns.tolist(), "model": ada2}, model_file)
         except Exception as e:
             raise e
