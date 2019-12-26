@@ -292,7 +292,7 @@ def predict_data(request):
 
             y_pred = model_file_data["model"].predict(data2)
 
-            data['Attrition'] = y_pred
+            data['Attrition'] = int(y_pred[0])
             udm = UnprocessedData(**data)
             udm.save()
 
