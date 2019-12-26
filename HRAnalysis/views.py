@@ -214,7 +214,10 @@ def data_detail(request):
     for row in UnprocessedData.objects.values():
         tmp_list = []
         for column in columns:
-            tmp_list.append(row[column])
+            if row[column] is not None:
+                tmp_list.append(row[column])
+            else:
+                tmp_list.append('null')
 
         table_data.append(tmp_list)
 
